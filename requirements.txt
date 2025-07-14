@@ -1,0 +1,6 @@
+langchain
+langchain-groq
+python-dotenv
+flask>=2.0.0
+watchdog>=2.1.0
+gunicorn>=20.1.0

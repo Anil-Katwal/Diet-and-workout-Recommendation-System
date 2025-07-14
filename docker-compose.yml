@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  diet-workout-app:
+    build: .
+    container_name: diet-workout-recommendation
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - diet-workout-network
+
+  # Development service with hot reload
+  diet-workout-dev:
+    build: .
+    container_name: diet-workout-recommendation-dev
+    ports:
+      - "5001:5000"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - ./logs:/app/logs
+    restart: unless-stopped
+    command: ["python", "app.py"]
+    profiles:
+      - dev
+    networks:
+      - diet-workout-network
+
+networks:
+  diet-workout-network:
+    driver: bridge
+
+volumes:
+  logs: 
