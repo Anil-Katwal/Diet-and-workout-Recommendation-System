@@ -1,6 +1,7 @@
 # Diet and Workout Recommendation System
 
 An AI-powered web application that provides personalized diet and workout recommendations based on user preferences, health conditions, and dietary restrictions.
+https://diet-and-workout-recommendation-system-ls98.onrender.com
 
 ## Features
 
